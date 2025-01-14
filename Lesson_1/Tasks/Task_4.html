@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<title>Lesson 1 - Task 4</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 4</h1>
+	<div class="section">
+		<h2>
+			<pre>
+				“Рахунок у банку”
+				Вимоги:
+				1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
+				2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+				3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+				4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+				5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків
+				автоматично)
+
+				При зміні суми :
+				- якщо було зняття, то суму відоражати червоним
+				- якщо було зарахування, то суму відображати зеленим
+				Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
+			</pre>
+		</h2>
+	</div>
+	<div class="section">
+		<h2>Відповідь</h2>
+
+		<div id="app">
+			<label>
+				Сума у грн.: <input type="number" v-model.number="sumUAH" :class="colorOfBalanceUAH" style="font-size: 50px;">
+			</label>
+			<p>Сума у USD: <span :class="colorOfBalanceUSD">{{getSumInUSD}}</span>.</p>
+			<p>Сума у EUR: <span :class="colorOfBalanceEUR">{{getSumInEUR}}</span>.
+			</p>
+			<hr>
+			<label>
+				Зарахувати на рахунок: <input type="number" v-model.number="addedSum">
+			</label>
+			<button @click="addSum()">Зарахувати</button>
+			<label>
+				Зняти з рахунку: <input type="number" v-model.number="withdrawalSum">
+			</label>
+			<button @click="withdrawSum()">Зняти</button>
+			<hr>
+			<p>
+				Комісія за обслуговування, 3%: {{serviceFee}} грн.
+			</p>
+
+
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			const rateUSD = 40;
+			const rateEUR = 43;
+
+			createApp({
+
+				data() {
+					return {
+						sumUAH: 0,
+						addedSum: 0,
+						withdrawalSum: 0,
+						serviceFee: 0,
+						colorOfBalanceUAH: 'textBlack',
+						colorOfBalanceUSD: 'textBlack',
+						colorOfBalanceEUR: 'textBlack',
+					};
+				},
+
+				methods: {
+					getServiceFee(sum) {
+						return (sum * 0.03).toFixed(2);
+					}
+				},
+
+				computed: {
+					getSumInUSD() {
+						let sum = this.sumUAH / rateUSD.toFixed(1);
+						if (sum > 100) this.colorOfBalanceUSD = 'textGreen';
+						else this.colorOfBalanceUSD = 'textRed';
+						return sum;
+					},
+
+					getSumInEUR() {
+						let sum = this.sumUAH / rateEUR.toFixed(1);
+						if (sum > 100) this.colorOfBalanceEUR = 'textGreen';
+						else this.colorOfBalanceEUR = 'textRed';
+						return sum;
+					},
+
+					addSum() {
+						if (this.addedSum <= 0) throw new Error('Incorrect value');
+						this.sumUAH += this.addedSum;
+						this.colorOfBalanceUAH = 'textGreen';
+						this.serviceFee = this.getServiceFee(this.addedSum);
+					},
+
+					withdrawSum() {
+						if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
+						this.sumUAH -= this.withdrawalSum;
+						this.colorOfBalanceUAH = 'textRed';
+						this.serviceFee = this.getServiceFee(this.withdrawalSum);
+					},
+				}
+
+			}).mount('#app')
+		</script>
+	</div>
+</body>
+
+</html>

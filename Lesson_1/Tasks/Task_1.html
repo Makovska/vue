@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<title>Lesson 1 - Task 1</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 1</h1>
+	<div class="section">
+		<h2>
+			<pre>
+				Задача 1. Вводиться кількість пасажирів. Вивести:
+				- скільки потрібно автобусів (кожен автобус на 20 місць)
+				- скільки пляшок води (кожному пасажиру 2 пляшки)
+				- скільки бутербродів (кожному пасажиру 3 бутерброди)
+			</pre>
+		</h2>
+	</div>
+	<div class="section">
+		<h2>Відповідь</h2>
+
+		<div id="app">
+			<label>
+				Кількість пасажирів: <input type="number" v-model.number="passengersCount">
+			</label>
+			<hr>
+			<p>
+				Кількість автобусів: {{busesCount}}
+			</p>
+			<p>
+				Кількість пляшок води: {{bottlesCount}}
+			</p>
+			<p>
+				Кількість бутербродів: {{burgersCount}}
+			</p>
+			<hr>
+			<button @click="onClear">Clear</button>
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			const busCapacity = 20;
+			const bottlesPerPerson = 2;
+			const burgersPerPerson = 3;
+
+			createApp({
+
+				data() {
+					return {
+						passengersCount: 0
+					};
+				},
+				methods: {
+					onClear() {
+						this.passengersCount = 0;
+					}
+				},
+				computed: {
+					busesCount() {
+						return Math.ceil(this.passengersCount / busCapacity);
+					},
+					bottlesCount() {
+						return this.passengersCount * bottlesPerPerson;
+					},
+					burgersCount() {
+						return this.passengersCount * burgersPerPerson;
+					},
+				}
+			}).mount('#app')
+		</script>
+	</div>
+</body>
+
+</html>

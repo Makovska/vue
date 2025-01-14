@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<title>Lesson 1 - Task 3</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 3</h1>
+	<div class="section">
+		<h2>Задано початок та кінець діапазону. При натисканні на кнопку випадковим чином генерувати значення з вказаного
+			діапазону та відображати його.
+		</h2>
+	</div>
+	<div class="section">
+		<h2>Відповідь</h2>
+
+		<div id="app">
+			<label>
+				Початок діапазону: <input type="number" v-model.number="rangeStart">
+			</label>
+			<label>
+				Кінець діапазону: <input type="number" v-model.number="rangeEnd">
+			</label>
+			<button @click="getRandomNumber">Розрахувати</button>
+			<hr>
+			<span>
+				Випадкове значення: {{randomNumber}}.
+			</span>
+			<hr>
+			<button @click="onClear">Clear</button>
+
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			createApp({
+
+				data() {
+					return {
+						rangeStart: 0,
+						rangeEnd: 0,
+						randomNumber: 0
+					};
+				},
+
+				methods: {
+					getRandomNumber() {
+						this.randomNumber = this.rangeStart + Math.floor(Math.random() * (this.rangeEnd - this.rangeStart + 1));
+					},
+					onClear() {
+						this.rangeStart = 0;
+						this.rangeEnd = 0;
+						this.randomNumber = 0;
+					}
+				},
+
+			}).mount('#app')
+		</script>
+	</div>
+</body>
+
+</html>

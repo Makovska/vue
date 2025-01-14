@@ -1,0 +1,254 @@
+/* ОБНУЛЕНИЕ СТИЛЕЙ */
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+}
+
+/* li {
+	list-style: none;
+} */
+
+a,
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+	font-size: inherit;
+}
+
+img {
+	vertical-align: top;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+html {
+	font-size: 0px;
+}
+
+body {
+	line-height: 1;
+}
+
+.wrapper {
+	/* min-height: 100%; */
+	overflow: hidden;
+}
+
+/* ------------------------------ */
+
+body {
+	padding: 15px;
+	background: 0 0 / cover url(../img/2.jpg) no-repeat;
+}
+.section {
+	max-width: 1280px;
+	margin: 0 auto;
+	background-color: rgba(7, 88, 61, 0.4);
+	border-radius: 5px;
+	box-shadow: 10px 10px 15px rgba(51, 51, 51, 0.8);
+	margin-bottom: 20px;
+	padding: 20px;
+	transition: 0.5s;
+}
+.section:hover {
+	background-color: rgba(7, 88, 61, 0.6);
+}
+h1.section {
+	font-size: 32px;
+	font-weight: 700;
+	color: rgb(189, 91, 0);
+	text-align: center;
+	background-color: rgba(7, 88, 61, 0.6);
+	padding: 30px;
+}
+li {
+	line-height: 2;
+}
+a {
+	font-size: 20px;
+	color: rgb(51, 51, 51);
+	font-weight: 700;
+	display: block;
+}
+h2 {
+	font-size: 20px;
+	color: rgb(51, 51, 51);
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+p,
+table {
+	font-size: 16px;
+	font-weight: 500;
+	color: rgb(51, 51, 51);
+	margin-top: 5px;
+}
+img {
+	display: block;
+	opacity: 0.6;
+	border-radius: 5px;
+	margin-top: 5px;
+}
+table,
+th,
+td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 10px;
+}
+td {
+	text-align: right;
+}
+th {
+	text-align: left;
+}
+caption {
+	margin-bottom: 10px;
+}
+button,
+.slot__btn {
+	display: inline-block;
+	padding: 10px 20px;
+	border: 1px solid green;
+	color: rgb(189, 91, 0);
+	font-size: 20px;
+	margin-right: 25px;
+	border-radius: 5px;
+	box-shadow: 5px 5px 10px rgba(51, 51, 51, 0.8);
+	cursor: pointer;
+	background-color: rgb(159, 190, 180);
+}
+.section:hover button,
+.section:hover .slot__btn {
+	color: rgb(230, 230, 230);
+	text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.8);
+}
+li {
+	color: black;
+	font-size: 16px;
+	margin-left: 25px;
+}
+label {
+	color: black;
+	font-size: 20px;
+	margin-right: 25px;
+}
+input {
+	border: 1px solid green;
+	box-shadow: 5px 5px 10px rgba(51, 51, 51, 0.8);
+	padding: 3px 5px;
+}
+button:hover,
+input:hover,
+.slot__btn:hover {
+	box-shadow: 1px 1px 5px rgba(51, 51, 51, 0.8);
+}
+.input {
+	width: 320px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+table {
+	display: inline-block;
+	margin-right: 20px;
+}
+h3 {
+	margin-top: 20px;
+	font-size: 20px;
+}
+hr {
+	display: block;
+	margin: 10px 0;
+	border-style: inset;
+	border-width: 1px;
+}
+.slot {
+	display: flex;
+	flex-direction: column;
+}
+.slot__machine {
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+.slot__position {
+	flex: 0 1 20%;
+	padding: 20px;
+	border: 1px solid green;
+	border-radius: 5px;
+	box-shadow: 5px 5px 10px rgba(51, 51, 51, 0.8);
+}
+.slot__position img {
+	width: 100%;
+}
+.slot__btn {
+	align-self: center;
+	margin-bottom: 20px;
+	font-size: 30px;
+	text-align: center;
+}
+.slot__win {
+	color: rgb(189, 91, 0);
+	font-size: 30px;
+	text-align: center;
+}
+span {
+	font-size: 20px;
+}
+.banner {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+	background-color: burlywood;
+	padding: 10px;
+	border: 3px solid #de87d0;
+}
+.banner__title {
+	font-size: 80px;
+	color: #755b71;
+}
+.banner__link {
+	width: 30%;
+	padding-top: 20%;
+	position: relative;
+}
+.banner__image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	margin-top: 0px;
+}
+
+.textRed{
+	color: red;
+}
+.textGreen {
+	color: green;
+}
+.textBlack {
+	color: black;
+}
