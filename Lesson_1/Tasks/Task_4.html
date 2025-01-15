@@ -107,9 +107,10 @@
 					},
 
 					withdrawSum() {
-						if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
+						let withdrawPlusFee = this.withdrawalSum * 1.03;
+						if (withdrawPlusFee > this.sumUAH) throw new Error('Incorrect value');
 						this.serviceFee = this.getServiceFee(this.withdrawalSum);
-						this.sumUAH -= (this.withdrawalSum + this.serviceFee);
+						this.sumUAH -= withdrawPlusFee;
 						this.colorOfBalanceUAH = 'textRed';
 					},
 				}
