@@ -101,16 +101,16 @@
 
 					addSum() {
 						if (this.addedSum <= 0) throw new Error('Incorrect value');
-						this.sumUAH += this.addedSum;
-						this.colorOfBalanceUAH = 'textGreen';
 						this.serviceFee = this.getServiceFee(this.addedSum);
+						this.sumUAH += (this.addedSum - this.serviceFee);
+						this.colorOfBalanceUAH = 'textGreen';
 					},
 
 					withdrawSum() {
 						if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
-						this.sumUAH -= this.withdrawalSum;
-						this.colorOfBalanceUAH = 'textRed';
 						this.serviceFee = this.getServiceFee(this.withdrawalSum);
+						this.sumUAH -= (this.withdrawalSum + this.serviceFee);
+						this.colorOfBalanceUAH = 'textRed';
 					},
 				}
 
