@@ -81,7 +81,28 @@
 				methods: {
 					getServiceFee(sum) {
 						return (sum * 0.03).toFixed(2);
-					}
+					},
+
+					addSum() {
+						if (this.addedSum <= 0) throw new Error('Incorrect value');
+						this.serviceFee = this.getServiceFee(this.addedSum);
+						this.sumUAH += (this.addedSum - this.serviceFee);
+						this.colorOfBalanceUAH = 'textGreen';
+					},
+
+					withdrawSum() {
+						let withdrawPlusFee = this.withdrawalSum * 1.03;
+						if (withdrawPlusFee > this.sumUAH) throw new Error('Incorrect value');
+						this.serviceFee = this.getServiceFee(this.withdrawalSum);
+						this.sumUAH -= withdrawPlusFee;
+						this.colorOfBalanceUAH = 'textRed';
+						
+						//Або зменшувати суму отриманої готівку на суму комісії						
+						// if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
+						// this.serviceFee = this.getServiceFee(this.withdrawalSum);
+						// this.sumUAH = this.sumUAH - this.withdrawalSum * 0.97 - this.serviceFee;
+						// this.colorOfBalanceUAH = 'textRed';
+					},
 				},
 
 				computed: {
@@ -99,20 +120,6 @@
 						return sum;
 					},
 
-					addSum() {
-						if (this.addedSum <= 0) throw new Error('Incorrect value');
-						this.serviceFee = this.getServiceFee(this.addedSum);
-						this.sumUAH += (this.addedSum - this.serviceFee);
-						this.colorOfBalanceUAH = 'textGreen';
-					},
-
-					withdrawSum() {
-						let withdrawPlusFee = this.withdrawalSum * 1.03;
-						if (withdrawPlusFee > this.sumUAH) throw new Error('Incorrect value');
-						this.serviceFee = this.getServiceFee(this.withdrawalSum);
-						this.sumUAH -= withdrawPlusFee;
-						this.colorOfBalanceUAH = 'textRed';
-					},
 				}
 
 			}).mount('#app')
