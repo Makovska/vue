@@ -22,7 +22,7 @@
 
 		<div id="app">
 			<label>
-				Hомер місяця: <input type="number" v-model.number="getMonthNumber">
+				Hомер місяця: <input type="number" v-model.lazy="getMonthNumber">
 			</label>
 			<div :style="getSeasonProperty().background" style="padding: 30px;">
 				<p>
