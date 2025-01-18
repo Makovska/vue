@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 1</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 1</h1>
+	<div class="section">
+		<h2>
+			<p>Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо ні, то:
+			<p>1) якщо логін = Іван – колір повідомлення про помилку синій
+			<p>2) якщо хтось інший, то колір повідомлення червоний
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<h2>Введіть логін і пароль</h2>
+			<label>
+				Login: <input type="text" v-model.lazy="login">
+			</label>
+			<label>
+				Password: <input type="password" v-model.lazy="password">
+			</label>
+			<button @click="isLoginCorrect">Go</button>
+
+			<template v-if="isDataValid">
+				<h2 v-if="isLoginCorrect">&#128516;</h2>
+				<h2 :class="textColor" v-else-if="login=='Ivan'">{{login}}е, введіть корректні логін та пароль!</h2>
+				<h2 :class="textColor" v-else>Login or password is incorrect!</h2>
+			</template>
+
+		</div>
+
+	</div>
+	
+	<script>
+		const { createApp } = Vue;
+
+		let usersList = [
+			{
+				login: 'admin',
+				password: 1234
+			},
+			{
+				login: 'mylog',
+				password: 'qwerty'
+			},
+			{
+				login: 'login',
+				password: 'password'
+			},
+		];
+
+		createApp({
+
+			data() {
+				return {
+					login: '',
+					password: ''
+				};
+			},
+
+			computed: {
+				isDataValid() {
+					return this.login && this.password;
+				},
+				isLoginCorrect() {
+					return usersList.some(user => user.login == this.login && user.password == this.password);
+				},
+				textColor() {
+					let color;
+					if (!this.isLoginCorrect) {
+						color = this.login == 'Ivan' ? 'textBlue' : 'textRed';
+					}
+					return color;
+				}
+			},
+		},
+
+		).mount('#app')
+	</script>
+
+</body>
+
+</html>

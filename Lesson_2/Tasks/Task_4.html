@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 4</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 4</h1>
+	<div class="section">
+		<h2>
+			<p>Вивести список як маркований список з елементами у форматі (name: salary) з масиву даних.
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<h2>Зарплатний лист</h2>
+
+			<ul>
+				<li v-for="worker in workersList" :key="worker.id">
+					{{worker.name}}: {{worker.salary}}
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		const workersList2 = [
+			{
+				id: '111',
+				name: 'Іванов',
+				salary: 10000,
+			},
+			{
+				id: '112',
+				name: 'Петров',
+				salary: 20000,
+			},
+			{
+				id: '113',
+				name: 'Сидоров',
+				salary: 50000,
+			},
+		];
+
+		createApp({
+
+			computed: {
+				workersList() {
+					return workersList2;
+				}
+			},
+		},
+
+		).mount('#app')
+	</script>
+	</div>
+</body>
+
+</html>

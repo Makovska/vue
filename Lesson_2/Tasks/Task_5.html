@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 5</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 5</h1>
+	<div class="section">
+		<h2>
+			<p>Самостійно сформуйте масив даних та виведіть фрагмент на зразок поданого (дані не обов’язково повинні
+				співпадати)
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<div class="search-result" v-for="result in searchList" :key="result.id">
+				<a class="search-result__header" :href="result.mainlink">
+					<div>
+						<div class="search-result__logo">
+							<img class="search-result__image" :src="result.icon" alt="logo">
+							<div>
+								<h2 class="search-result__site-title">{{result.siteTitle}}</h2>
+								<span>{{result.mainlink}}</span>
+							</div>
+						</div>
+						<h3 class="search-result__title">{{result.title}}</h3>
+					</div>
+				</a>
+				<p class="search-result__description">{{result.description}}</p>
+				<div class="search-result__link-list">
+					<a class="search-result__link" v-for="(link, index) in result.linksList" :key="link.index"
+						:href="link.link">{{link.title}}</a>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		const searchList = [
+			{
+				id: '111',
+				icon: '../../img/vue_array/1.png',
+				siteTitle: 'Vue.js',
+				title: 'Vue.js - The Progressive JavaScript Framework | Vue.js',
+				description: 'The Progressive JavaScript Framework · Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation',
+				mainlink: 'https://vuejs.org',
+				linksList: [
+					{
+						title: 'Quick Start',
+						link: 'https://vuejs.org/guide/quick-start'
+					},
+					{
+						title: 'Tutorial',
+						link: 'https://vuejs.org/tutorial/#step-1'
+					},
+					{
+						title: 'Introduction',
+						link: 'https://vuejs.org/guide/introduction.html'
+					}
+				]
+			},
+			{
+				id: '112',
+				icon: '../../img/vue_array/2.png',
+				siteTitle: 'Vue',
+				title: 'Vue | Cinema Listings and Latest Movies | Book Film Tickets',
+				description: 'See the latest films and live events in 2D, 3D, IMAX and IMAX 3D at Vue cinemas. Browse movie times at a cinema near you and book your tickets online today.',
+				mainlink: 'https://www.myvue.com',
+				linksList: [
+					{
+						title: 'Trailers',
+						link: 'https://www.myvue.com/trailers'
+					},
+					{
+						title: 'Families',
+						link: 'https://www.myvue.com/family'
+					}
+				]
+			},
+			{
+				id: '113',
+				icon: '../../img/vue_array/3.png',
+				siteTitle: 'Wikipedia',
+				title: 'Vue.js',
+				description: 'Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.',
+				mainlink: 'https://en.wikipedia.org/wiki/Vue.js',
+				linksList: [
+				]
+			},
+			{
+				id: '114',
+				icon: '../../img/vue_array/4.png',
+				siteTitle: 'GitHub',
+				title: 'GitHub - vuejs/vue: This is the repo for Vue 2. For Vue 3, go ...',
+				description: 'Vue (pronounced /vjuː/ , like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, ...',
+				mainlink: 'https://github.com › vuejs',
+				linksList: [
+					{
+						title: 'Awesome Vue',
+						link: 'https://github.com/vuejs/awesome-vue'
+					},
+					{
+						title: 'Pull requests 247',
+						link: 'https://github.com/vuejs/vue/pulls'
+					}
+					,
+					{
+						title: 'Gitignore',
+						link: 'https://github.com/vuejs/vue/blob/main/.gitignore'
+					}
+					,
+					{
+						title: 'Editorconfig',
+						link: 'https://github.com/vuejs/vue/blob/main/.editorconfig'
+					}
+				]
+			},
+		];
+
+		createApp({
+
+			computed: {
+				searchList() {
+					return searchList;
+				}
+			},
+		},
+
+		).mount('#app')
+	</script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 2</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 2</h1>
+	<div class="section">
+		<h2>
+			<p>З випадаючого списку вибираємо клас квитка у літаку. Якщо
+			<p>1) бізнес - виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску
+				(так/ні)), на фоні зображення бізнес кают
+			<p>2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<h2>Оберіть клас квитка</h2>
+			<select v-model="ticketClass">
+				<option value="business">Бізнес</option>
+				<option value="econom">Економ</option>
+			</select>
+			<hr>
+
+			<div class="ticket-options" :class="ticketClassBg" v-show="isTicketClassSelected">
+
+				<h2>Оберіть додаткові опції</h2>
+				<select v-if="isBusiness" v-model="optionsBusiness">
+					<option value="news">Газети</option>
+					<option value="cognac">Коньяк</option>
+				</select>
+
+				<select v-else v-model="optionsEconom">
+					<option value="beer">Пиво</option>
+					<option value="chips">Чіпси</option>
+				</select>
+
+				<template v-if="isBusiness&&isСognac">
+					<h2>Бажаєте закуску?</h2>
+					<select v-model="snacksForCognac">
+						<option value="yes">Так</option>
+						<option value="no">Ні</option>
+					</select>
+				</template>
+
+			</div>
+
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			createApp({
+
+				data() {
+					return {
+						ticketClass: null,
+						optionsBusiness: null,
+						optionsEconom: null,
+						snacksForCognac: null
+					};
+				},
+
+				computed: {
+					isTicketClassSelected() {
+						return !!this.ticketClass;
+					},
+					isBusiness() {
+						return this.ticketClass == 'business';
+					},
+					isСognac() {
+						return this.optionsBusiness == 'cognac';
+					},
+					ticketClassBg() {
+						return this.isBusiness ? 'bg-plane' : 'bg-cloud';
+					}
+				},
+			},
+
+			).mount('#app')
+		</script>
+	</div>
+</body>
+
+</html>

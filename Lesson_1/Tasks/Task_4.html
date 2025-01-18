@@ -14,21 +14,19 @@
 	<h1 class="section">Задача 4</h1>
 	<div class="section">
 		<h2>
-			<pre>
-				“Рахунок у банку”
-				Вимоги:
-				1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
-				2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
-				3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
-				4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
-				5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків
+			<p>“Рахунок у банку”
+			<p>Вимоги:
+			<p>1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
+			<p>2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+			<p>3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+			<p>4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+			<p>5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків
 				автоматично)
-
-				При зміні суми :
-				- якщо було зняття, то суму відоражати червоним
-				- якщо було зарахування, то суму відображати зеленим
-				Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
-			</pre>
+			
+			<p>При зміні суми :
+			<p>- якщо було зняття, то суму відоражати червоним
+			<p>- якщо було зарахування, то суму відображати зеленим
+			<p>Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим</p>
 		</h2>
 	</div>
 	<div class="section">
@@ -91,17 +89,15 @@
 					},
 
 					withdrawSum() {
+						// if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
+						// this.serviceFee = this.getServiceFee(this.withdrawalSum);
+						// this.sumUAH = this.sumUAH - this.withdrawalSum * 0.97 - this.serviceFee;
+						// this.colorOfBalanceUAH = 'textRed';
 						let withdrawPlusFee = this.withdrawalSum * 1.03;
 						if (withdrawPlusFee > this.sumUAH) throw new Error('Incorrect value');
 						this.serviceFee = this.getServiceFee(this.withdrawalSum);
 						this.sumUAH -= withdrawPlusFee;
 						this.colorOfBalanceUAH = 'textRed';
-						
-						//--- Або зменшувати суму отриманої готівки на суму комісії						
-						// if (this.withdrawalSum > this.sumUAH) throw new Error('Incorrect value');
-						// this.serviceFee = this.getServiceFee(this.withdrawalSum);
-						// this.sumUAH = this.sumUAH - this.withdrawalSum * 0.97 - this.serviceFee;
-						// this.colorOfBalanceUAH = 'textRed';
 					},
 				},
 

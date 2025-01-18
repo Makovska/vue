@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 3</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+	<h1 class="section">Задача 3</h1>
+	<div class="section">
+		<h2>
+			<p>Елемент тренажера англійської. Виводимо зображення елемента і слово. Користувач вводить відповідь. Якщо вірно
+				– відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), якщо ні - то відтворюємо фразу
+				«Невірно, спробуйте ще раз» (і додаємо червону рамку).
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<h2>Тренажер англійської</h2>
+
+			<div class="english-trainer" :class="borderColor">
+				<img :src="pictureOfWord" alt="image">
+				<div>
+					<p class="word">{{wordEN}}</p>
+					<p>Ваш переклад</p>
+					<input type="text" v-model.lazy="wordUA">
+					<button @click="isCorrect">Перевірити</button>
+				</div>
+
+				<div v-show="isDataEntered">
+					<p v-if="isCorrect">Добре. Молодець!</p>
+					<p v-else>Невірно, спробуйте ще раз.</p>
+					<button @click="nextWord" :disabled="!isCorrect">Далі</button>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		const dictionary = [
+			{
+				wordEN: 'winter',
+				wordUA: 'зима',
+				picture: '../../img/winter.png',
+			},
+			{
+				wordEN: 'spring',
+				wordUA: 'весна',
+				picture: '../../img/spring.png',
+			},
+			{
+				wordEN: 'summer',
+				wordUA: 'літо',
+				picture: '../../img/summer.png',
+			},
+			{
+				wordEN: 'autumn',
+				wordUA: 'осінь',
+				picture: '../../img/autumn.png',
+			}
+		];
+
+		createApp({
+
+			data() {
+				return {
+					wordUA: null,
+					index: this.randomIndex()
+				};
+			},
+
+			methods: {
+
+				randomIndex() {
+					return (Math.floor(Math.random() * (dictionary.length)));
+				},
+				nextWord() {
+					this.wordUA = null;
+					this.index = this.randomIndex();
+				},
+
+			},
+
+			computed: {
+
+				wordEN() {
+					return dictionary[this.index].wordEN;
+				},
+
+				pictureOfWord() {
+					return dictionary[this.index].picture;
+				},
+
+				isDataEntered() {
+					return !!this.wordUA;
+				},
+
+				isCorrect() {
+					return this.wordUA == dictionary[this.index].wordUA;
+				},
+
+				borderColor() {
+					if (this.isDataEntered)
+						return this.isCorrect ? 'border-green' : 'border-red';
+				}
+			},
+		},
+
+		).mount('#app')
+	</script>
+	</div>
+</body>
+
+</html>

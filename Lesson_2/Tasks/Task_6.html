@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 2 - Task 6</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<style>
+		.order {
+			margin-bottom: 20px;
+		}
+
+		.cooking {
+			display: flex;
+			gap: 10px;
+		}
+
+		.cooking h6 {
+			font-size: 20px;
+			margin-bottom: 15px;
+		}
+
+		.cooking .section {
+			flex: 33%;
+		}
+
+		.cooking button {
+			font-size: 14px;
+			padding: 5px;
+			margin: 0;
+		}
+
+		.cooking__cell {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="section">Задача 6</h1>
+	<div class="section">
+		<h2>
+			<p>На кухню поступають замовлення. Спочатку ми додаємо їх у список “Очікують на виконання”, якщо повар
+				береться робити — замовлення переходить у список “Виконуються”, якщо замовлення виконано — переходить у список
+				“Готові до виносу”. Якщо натиснути на “Подано” - страва зникає з таблиці
+			</p>
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<div class="order">
+				<label>Нова замовлена страва:
+					<input type="text" v-model.lazy.trim="newDish">
+				</label>
+				<button :disabled="!isDishEntered" @click="getOrder">Додати</button>
+			</div>
+
+			<div class="cooking" v-show="isCooking">
+
+				<div class="section">
+					<h6>Очікують виконання</h6>
+					<div class="cooking__cell" v-for="(dish, index) in waitingList" :key="dish.id">
+						<span>{{dish.title}}</span>
+						<button @click="getToProcessingList(index)">Готувати</button>
+					</div>
+				</div>
+
+				<div class="section">
+					<h6>Виконуються</h6>
+					<div class="cooking__cell" v-for="(dish, index) in processingList" :key="dish.id">
+						<span>{{dish.title}}</span>
+						<button @click="getToCompletedList(index)">Приготовлено</button>
+					</div>
+				</div>
+
+				<div class="section">
+					<h6>Готові до виносу</h6>
+					<div class="cooking__cell" v-for="(dish, index) in completedList" :key="dish.id">
+						<span>{{dish.title}}</span>
+						<button @click="getToServe(index)">Подано</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		createApp({
+			data() {
+				return {
+					newDish: null,
+					waitingList: [],
+					processingList: [],
+					completedList: []
+				};
+			},
+
+			methods: {
+				getOrder() {
+					this.waitingList.push({
+						id: new Date().getTime(),
+						title: this.newDish
+					});
+					this.newDish = null;
+				},
+				getToProcessingList(index) {
+					let cookingDish = this.waitingList.splice(index, 1)[0];
+					this.processingList.push(cookingDish);
+				},
+				getToCompletedList(index) {
+					let cookedDish = this.processingList.splice(index, 1)[0];
+					this.completedList.push(cookedDish);
+				},
+				getToServe(index) {
+					let servedDish = this.completedList.splice(index, 1)[0];
+				}
+			},
+
+			computed: {
+				isDishEntered() {
+					return !!this.newDish;
+				},
+				isCooking() {
+					return this.waitingList.length > 0 || this.processingList.length > 0 || this.completedList.length > 0;
+				},
+
+			},
+		},
+
+		).mount('#app')
+	</script>
+
+</body>
+
+</html>
