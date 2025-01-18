@@ -136,7 +136,7 @@ button {
 	font-size: 20px;
 	margin-right: 25px;
 	border-radius: 3px;
-	box-shadow: 5px 5px 5px rgba(51, 51, 51, 0.8);
+	box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.8);
 	cursor: pointer;
 	background-color: rgb(159, 190, 180);
 }
@@ -155,7 +155,7 @@ label {
 }
 input {
 	border: 1px solid green;
-	box-shadow: 5px 5px 10px rgba(51, 51, 51, 0.8);
+	box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.8);
 	padding: 3px 5px;
 	font-size: 20px;
 	margin: 10px 0;
@@ -221,45 +221,64 @@ select {
 	flex-direction: column;
 	margin-bottom: 30px;
 }
-
 .search-result__header {
 	display: flex;
 }
-
 .search-result__logo {
 	display: flex;
 	gap: 10px;
 	align-items: center;
 }
-
 .search-result__image {
 	border-radius: 50%;
 }
-
 .search-result__site-title {
 	line-height: 1;
 	margin: 0;
 }
-
 .search-result__title {
 	color: #1a0dab;
 	margin: 5px 0;
 }
-
 .search-result__description {
 	line-height: 1;
 }
-
 .search-result__link-list {
 	display: flex;
 	gap: 20px;
 	font-size: 14px;
 }
-
 .search-result__link {
 	font-size: 16px;
 	color: #1a0dab;
 }
+
+.order {
+	margin-bottom: 20px;
+}
+.cooking {
+	display: flex;
+	gap: 10px;
+	min-height: 200px;
+}
+.cooking h6 {
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+.cooking .section {
+	flex: 33%;
+}
+.cooking button {
+	font-size: 14px;
+	padding: 5px;
+	margin: 0;
+}
+.cooking__cell {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 
 .textRed{
 	color: red;
