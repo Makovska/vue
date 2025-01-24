@@ -63,10 +63,10 @@
 				</tr>
 				<tr v-for="row in gameField.length">
 					<th>{{row}}</th>
-					<td v-for="col in gameField[row-1].length" @click="shot(row-1, col-1)"
-						:class="[{'is-shot':gameField[row-1][col-1].isShot},{'is-ship':gameField[row-1][col-1].isShot&&gameField[row-1][col-1].isShip}]">
-						<span v-if="gameField[row-1][col-1].isShip&&gameField[row-1][col-1].isShot">&#128165;</span>
-						<span v-else-if="!gameField[row-1][col-1].isShip&&gameField[row-1][col-1].isShot">&#8226;</span>
+					<td v-for="col in gameField[row-1].length" @click="shot(row, col)"
+						:class="[{'is-shot':isShot(row, col)},{'is-ship':isShot(row, col) && isShip(row, col)}]">
+						<span v-if="isShip(row, col) && isShot(row, col)">&#128165;</span>
+						<span v-else-if="isShot(row, col)">&#8226;</span>
 					</td>
 				</tr>
 			</table>
@@ -160,12 +160,15 @@
 
 				},
 
-				shot(y, x) {
+				shot(row, col) {
 					this.history.push({
 						gameField: JSON.stringify(this.gameField),
 						shipsList: JSON.stringify(this.shipsList)
 					});
 					if (this.history.length > 3) this.history.shift();
+
+					let y = row - 1;
+					let x = col - 1;
 
 					this.gameField[y][x].isShot = true;
 					if (this.gameField[y][x].isShip) {
@@ -180,7 +183,7 @@
 							}
 						}
 					}
-					
+
 					if (!this.shipsList.length) { alert(`You win! It's good!`); }
 				},
 
@@ -242,6 +245,12 @@
 					}
 				},
 
+				isShot(row, col) {
+					return this.gameField[row - 1][col - 1].isShot;
+				},
+				isShip(row, col) {
+					return this.gameField[row - 1][col - 1].isShip;
+				},
 			},
 		}).mount('#app')
 	</script>
