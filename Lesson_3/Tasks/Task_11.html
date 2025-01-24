@@ -73,7 +73,7 @@
 
 			<div v-show="history.length" class="step-container">
 				<button v-for="step in history.length" @click="goToStep(step)" class="step-btn">
-					Крок {{step}}
+					{{step -1 - history.length}} кроки
 				</button>
 			</div>
 
@@ -165,6 +165,8 @@
 						gameField: JSON.stringify(this.gameField),
 						shipsList: JSON.stringify(this.shipsList)
 					});
+					if (this.history.length > 3) this.history.shift();
+
 					this.gameField[y][x].isShot = true;
 					if (this.gameField[y][x].isShip) {
 						for (let shipInd = 0; shipInd < this.shipsList.length; shipInd++) {
@@ -178,6 +180,7 @@
 							}
 						}
 					}
+					
 					if (!this.shipsList.length) { alert(`You win! It's good!`); }
 				},
 
