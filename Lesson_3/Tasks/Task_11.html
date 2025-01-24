@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 3 - Task 11</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<style>
+		td {
+			font-size: 20px;
+			width: 50px;
+			height: 50px;
+			text-align: center;
+		}
+
+		button {
+			display: block;
+			margin-bottom: 20px;
+		}
+
+		.is-shot {
+			background-color: rgba(7, 88, 61, 0.6);
+		}
+
+		.is-ship {
+			box-shadow: inset 0 0 7px red;
+		}
+
+		.step-container {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.step-btn {
+			font-size: 14px;
+			padding: 5px;
+			margin: 2px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="section">Задача 11</h1>
+	<div class="section">
+		<h2>
+			Морський бій з історією.
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<button @click="createGameField">New game</button>
+
+			<table v-show="gameField.length">
+				<tr>
+					<th></th>
+					<th v-for="letter in gameField.length">{{String.fromCharCode(letter+64)}}</th>
+				</tr>
+				<tr v-for="row in gameField.length">
+					<th>{{row}}</th>
+					<td v-for="col in gameField[row-1].length" @click="shot(row-1, col-1)"
+						:class="[{'is-shot':gameField[row-1][col-1].isShot},{'is-ship':gameField[row-1][col-1].isShot&&gameField[row-1][col-1].isShip}]">
+						<span v-if="gameField[row-1][col-1].isShip&&gameField[row-1][col-1].isShot">&#128165;</span>
+						<span v-else-if="!gameField[row-1][col-1].isShip&&gameField[row-1][col-1].isShot">&#8226;</span>
+					</td>
+				</tr>
+			</table>
+
+			<div v-show="history.length" class="step-container">
+				<button v-for="step in history.length" @click="goToStep(step)" class="step-btn">
+					Крок {{step}}
+				</button>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		const startLetter = 'A'.charCodeAt(0);
+		const lastLetter = startLetter + 10;
+		const shipsConfig = {
+			ship4Decker: [1, 4], // [0] - кількість кораблів; [1] - кількість палуб
+			ship3Decker: [2, 3],
+			ship2Decker: [3, 2],
+			ship1Decker: [4, 1]
+		};
+
+		createApp({
+
+			data() {
+				return {
+					gameField: [],
+					shipsList: [],
+					history: []
+				};
+			},
+
+			methods: {
+				createGameField() {
+					this.gameField = [];
+					this.shipsList = [];
+					this.history = [];
+					for (let rowInd = 1; rowInd <= 10; rowInd++) {
+						let row = [];
+						for (let colInd = startLetter; colInd < lastLetter; colInd++) {
+							row.push({
+								id: rowInd + String.fromCharCode(colInd),
+								isShip: false,
+								isAvailable: true,
+								isShot: false
+							});
+						}
+						this.gameField.push(row);
+					}
+
+					for (const key in shipsConfig) {
+						for (let i = 0; i < shipsConfig[key][0]; i++) {
+							let ship = this.createShip(shipsConfig[key][1]);
+						}
+					}
+				},
+
+				createShip(shipLength) {
+					let rowInd = Math.floor(Math.random() * (10 - shipLength));
+					let colInd = Math.floor(Math.random() * (10 - shipLength));
+					let direction = this.randomDirection();
+					let ship = [];
+
+					while (ship.length < shipLength &&
+						this.gameField[rowInd][colInd].isShip == false &&
+						this.gameField[rowInd][colInd].isAvailable == true
+					) {
+						ship.push({
+							coordinates: [rowInd, colInd],
+							isShot: false
+						});
+						rowInd += direction[0];
+						colInd += direction[1];
+					}
+
+					if (ship.length < shipLength) {
+						this.createShip(shipLength);
+					} else {
+						for (let row = 0; row < ship.length; row++) {
+							let y = ship[row].coordinates[0];
+							let x = ship[row].coordinates[1];
+							this.gameField[y][x].isShip = true;
+						}
+						this.checkAroundCells(ship, 'isAvailable', false);
+						this.shipsList.push(ship);
+					}
+
+				},
+
+				shot(y, x) {
+					this.history.push({
+						gameField: JSON.stringify(this.gameField),
+						shipsList: JSON.stringify(this.shipsList)
+					});
+					this.gameField[y][x].isShot = true;
+					if (this.gameField[y][x].isShip) {
+						for (let shipInd = 0; shipInd < this.shipsList.length; shipInd++) {
+							let shotedShip = this.shipsList[shipInd].find(ship => ship.coordinates[0] == y && ship.coordinates[1] == x);
+							if (shotedShip) shotedShip.isShot = true;
+
+							let everyShotedShip = this.shipsList[shipInd].every(ship => ship.isShot == true);
+							if (everyShotedShip) {
+								this.checkAroundCells(this.shipsList[shipInd], 'isShot', true);
+								this.shipsList.splice(shipInd, 1);
+							}
+						}
+					}
+					if (!this.shipsList.length) { alert(`You win! It's good!`); }
+				},
+
+				goToStep(step) {
+					this.gameField = JSON.parse(this.history[step - 1].gameField);
+					this.shipsList = JSON.parse(this.history[step - 1].shipsList);
+					this.history.splice(step - 1);
+				},
+
+				randomDirection() {
+					let x = Math.floor(Math.random() * 2); //  Якщо y=1, корабель по вертикалі. Якщо x=1 корабель по горизонталі.
+					let y = x === 1 ? 0 : 1;
+					return [y, x];
+				},
+
+				checkAroundCells(ship, propForChange, boolValue) {
+					for (let row = 0; row < ship.length; row++) {
+						let y = ship[row].coordinates[0];
+						let x = ship[row].coordinates[1];
+						this.gameField[y][x][propForChange] = boolValue;
+
+						if (y - 1 >= 0) {
+							this.gameField[y - 1][x][propForChange] = boolValue;
+							if (x - 1 >= 0) {
+								this.gameField[y - 1][x - 1][propForChange] = boolValue;
+								this.gameField[y][x - 1][propForChange] = boolValue;
+							}
+							if (x + 1 <= 10) {
+								this.gameField[y - 1][x + 1][propForChange] = boolValue;
+								this.gameField[y][x + 1][propForChange] = boolValue;
+							}
+						} else {
+							if (x - 1 >= 0) {
+								this.gameField[y][x - 1][propForChange] = boolValue;
+							}
+							if (x + 1 <= 10) {
+								this.gameField[y][x + 1][propForChange] = boolValue;
+							}
+						}
+
+						if (y + 1 <= 10) {
+							this.gameField[y + 1][x][propForChange] = boolValue;
+							if (x - 1 >= 0) {
+								this.gameField[y + 1][x - 1][propForChange] = boolValue;
+								this.gameField[y][x - 1][propForChange] = boolValue;
+							}
+							if (x + 1 <= 10) {
+								this.gameField[y + 1][x + 1][propForChange] = boolValue;
+								this.gameField[y][x + 1][propForChange] = boolValue;
+							}
+						} else {
+							if (x - 1 >= 0) {
+								this.gameField[y][x - 1][propForChange] = boolValue;
+							}
+							if (x + 1 <= 10) {
+								this.gameField[y][x + 1][propForChange] = boolValue;
+							}
+						}
+					}
+				},
+
+			},
+		}).mount('#app')
+	</script>
+
+</body>
+
+</html>

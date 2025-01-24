@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+	<title>Lesson 3 - Task 12</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<style>
+		td {
+			text-align: left;
+			min-width: 150px;
+			line-height: 1;
+		}
+
+		.container-data {
+			display: flex;
+			gap: 20px;
+		}
+
+		.is-choose {
+			background-color: rgba(7, 88, 61, 0.6);
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="section">Задача 12</h1>
+	<div class="section">
+		<h2>
+			Мережа магазинів. Дано список відділень та список товарів. Для кожного відділення можна вибирати декілька товарів.
+			Вибирати та відображати перелік вибраних товарів для кожного відділення.
+		</h2>
+	</div>
+	<div class="section">
+
+		<div id="app">
+
+			<div class="container-data">
+				<div>
+					<h2>Відділення</h2>
+					<table>
+						<tr v-for="shop in shopsList.length" :key="shop">
+							<td @click="chooseShop(shop)" :class="{'is-choose':shopForAdd==shopsList[shop-1]}">{{shopsList[shop-1]}}
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div>
+					<h2>Товари</h2>
+					<table>
+						<tr v-for="good in goodsList.length" :key="good">
+							<td @click="chooseGood(good)" :class="{'is-choose':goodForAdd==goodsList[good-1]}">{{goodsList[good-1]}}
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<button @click="addGoodToShop">Додати</button>
+
+			<div v-if="!isEmpty" class="container-list">
+				<h2>Розподіл товарів</h2>
+				<table>
+					<tr v-for="(shop, key) in distribution" :key="shop">
+						<td>{{key}}
+							<ul>
+								<li v-for="(good, ind) in shop" @click="removeGood(key, ind)">{{good}}</li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			const shopsList = [
+				'Головне',
+				'Оптове',
+				'Магазин1',
+				'Магазин2',
+				'Магазин3',
+			];
+
+			const goodsList = [
+				'Телефони',
+				'Телевізори',
+				'Мікрохвильові печі',
+				'Пральні машини',
+				'Фени',
+				'Чайники',
+			];
+
+			createApp({
+
+				data() {
+					return {
+						shopForAdd: null,
+						goodForAdd: null,
+						distribution: {}
+					};
+				},
+
+				methods: {
+					addGoodToShop() {
+						if (this.shopForAdd && this.goodForAdd) {
+							if (this.shopForAdd in this.distribution) {
+								if (!this.distribution[this.shopForAdd].some(good => good == this.goodForAdd))
+									this.distribution[this.shopForAdd].push(this.goodForAdd);
+							} else { Object.assign(this.distribution, { [this.shopForAdd]: [this.goodForAdd] }); }
+						}
+						this.shopForAdd = null;
+						this.goodForAdd = null;
+					},
+
+					chooseShop(shop) {
+						this.shopForAdd = this.shopsList[shop - 1];
+						console.log(this.shopForAdd);
+					},
+
+					chooseGood(good) {
+						this.goodForAdd = this.goodsList[good - 1];
+						console.log(this.goodForAdd);
+					},
+
+					removeGood(shop, good) {
+						this.distribution[shop].splice(good, 1);
+						if (!this.distribution[shop].length) { delete this.distribution[shop]; }
+					}
+				},
+
+				computed: {
+					shopsList() {
+						return shopsList;
+					},
+
+					goodsList() {
+						return goodsList;
+					},
+
+					isEmpty() {
+						return Object.keys(this.distribution).length === 0;
+					}
+				},
+			},
+			).mount('#app')
+		</script>
+
+</body>
+
+</html>
