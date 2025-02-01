@@ -10,7 +10,7 @@
 		
 		<div class="cart-item__counter">
 			<button class="cart-item__btn" :class="{'cart-item__btn--disabled': isMinQuantity}" :disabled="isMinQuantity" @click="onDecrement">-</button>
-			<input v-model.number.lazy="quantityValue" class="cart-item__quantity" type="number" min=1>
+			<input v-model="quantityValue" class="cart-item__quantity" type="number" min=1>
 			<button class="cart-item__btn" @click="onIncrement">+</button>
 		
 			<div class="cart-item__price">
@@ -32,19 +32,17 @@
 				type: Object,
 				default: ()=>({})
 			},
-		},
-		data() {
-			return {
-				quantityValue: this.productInCart.quantity,
-			}
+			modelValue: {
+				type: Number,
+			},
 		},
 
 		methods: {
 			onDecrement(){
-				this.$emit('decrement', this.productInCart)
+				this.quantityValue--
 			},
 			onIncrement(){
-				this.$emit('increment', this.productInCart)
+				this.quantityValue++
 			},
 			onDelete(){
 				this.$emit('delete', this.productInCart)
@@ -55,16 +53,17 @@
 			isMinQuantity() {
 				return this.productInCart.quantity === 1
 			},
+			quantityValue: {
+					get() {
+						return this.modelValue
+					},
+					set(newVal) {
+						if(newVal<=0) newVal = 1
+						this.$emit('update:modelValue', newVal)
+					},
+				},
 		},
 
-		watch: {
-			quantityValue(newValue) {
-				this.$emit('changeQuantity', {product: this.productInCart, newValue})
-			},
-			'productInCart.quantity'(newValue) {
-				this.quantityValue = newValue
-			},
-    },
 	}
 </script>
 

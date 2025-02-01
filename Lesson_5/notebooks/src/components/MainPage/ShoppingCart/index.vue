@@ -1,11 +1,10 @@
 <template>
 	<div class="cart-container">
-		
+
 		<cart-item v-for="productInCart in productsInCartList" :key="productInCart.id" :product-in-cart="productInCart" 
-		@changeQuantity="$emit('changeQuantity', $event)"
-		@decrement="$emit('decrement', $event)"
-		@increment="$emit('increment', $event)"
-		@delete="$emit('delete', $event)"/>
+		v-model="productInCart.quantity"
+		@delete="$emit('delete', $event)"
+		/>
 
 		<div class="total-value">
 			<span class="sum">{{totalValue}} ₴</span>

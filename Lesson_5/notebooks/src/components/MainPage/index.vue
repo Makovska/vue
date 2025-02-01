@@ -5,10 +5,7 @@
 		@addToCart="addToCart"/>
 
 		<shopping-cart v-if="productsInCartList.length" :products-in-cartList="productsInCartList" 
-		@changeQuantity="onChangeQuantity"
-		@decrement="onDecrement"
-		@increment="onIncrement"
-		@delete="onDelete" />
+		@delete="onDelete"/>
 		
 	</div>
 </template>
@@ -37,21 +34,9 @@ import ShoppingCart from './ShoppingCart'
 				if(!currentProduct) this.productsInCartList.push({quantity: 1, ...product})
 				else currentProduct.quantity+=1
 			},
-			onChangeQuantity({product, newValue}){
-				let currentProduct = this.productsInCartList.find(pr=> pr.id === product.id)
-				currentProduct.quantity = newValue
-			},
-			onDecrement(product){
-				let currentProduct = this.productsInCartList.find(pr=> pr.id === product.id)
-				currentProduct.quantity-=1
-			},
-			onIncrement(product){
-				let currentProduct = this.productsInCartList.find(pr=> pr.id === product.id)
-				currentProduct.quantity+=1
-			},
 			onDelete(product){
 				this.productsInCartList = this.productsInCartList.filter(pr=> pr.id !== product.id)
-			}
+			},
 		},
 	}
 </script>
