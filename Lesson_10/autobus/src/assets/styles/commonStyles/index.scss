@@ -1,0 +1,62 @@
+@import './fonts.scss';
+@import './null.scss';
+@import './button.scss';
+@import './table.scss';
+
+body {
+	background: #edf0f538 url(@/assets/bg9.svg) center / cover no-repeat fixed;
+}
+
+.container {
+	padding: 0 15px;
+	max-width: 1230px;
+	margin: 0 auto;
+}
+
+*:focus-visible {
+	outline: 2px solid #44648f;
+}
+
+main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+}
+
+section {
+	min-height: 50vh;
+	min-width: 50vw;
+	background: #fdfdfd;
+	padding: 20px;
+	box-shadow: 1px 1px 5px -1px #00000036;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 20px;
+}
+
+h3 {
+	font-size: 30px;
+}
+h4 {
+	font-size: 20px;
+}
+
+input {
+	border: 1px solid #44648f;
+	padding: 5px;
+
+	&[type="number"] {
+		width: 60px;
+		text-align: center;
+	}
+}
+
+select {
+	border: 1px solid #44648f;
+	padding: 5px;
+	width: 200px;
+}
