@@ -1,0 +1,23 @@
+table {
+	min-width: 40%;
+	border: 1px solid #44648f;
+}
+
+table,
+th,
+td {
+	border-bottom: 1px solid #44648f;
+	border-collapse: collapse;
+	padding: 10px;
+	text-align: left;
+}
+
+td {
+	font-weight: 500;
+	line-height: 1.3;
+	color: black;
+}
+
+tr:nth-child(odd) {
+	background-color: #44658f0e;
+}

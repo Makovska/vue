@@ -1,0 +1,47 @@
+.red-btn {
+	padding: 5px 10px;
+	border-radius: 2px;
+	font-weight: 500;
+	background: #af3142de;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
+	box-shadow: 2px 2px 2px 1px #00000036;
+	transition: 0.1s;
+	white-space: nowrap;
+	align-self: flex-start;
+
+	&:hover {
+		background: #af3142a9;
+	}
+
+	&:focus-visible {
+		background: #af3142a9;
+	}
+
+	&:active {
+		transform: translateY(2px);
+		box-shadow: 2px 2px 2px -1px #00000036;
+	}
+
+	&[disabled]{
+		background: #af31423b;
+		box-shadow: 2px 2px 2px 1px #00000036;
+		transform: translateY(0px);
+	}
+}
+
+.icon-btn {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	background: none;
+
+	&:hover {
+		filter: drop-shadow(2px 2px 2px #af3142a9);
+	}
+
+	&:active {
+		filter: drop-shadow(1px 1px 1px #af3142a9);
+	}
+}
