@@ -1,0 +1,25 @@
+.footer {
+	padding: 1.25rem;
+	border-top: 1px solid #44648f;
+	background: #edf0f5;
+	box-shadow: 1px 0 5px 1px #00000036;
+	font-size: 0.75rem;
+
+	&__copyright {
+		text-align: center;
+	}
+
+	&__info{
+		display: flex;
+		justify-content: space-between;
+		font-size: 20px;
+		align-items: center;
+	}
+	
+	hr{
+		height: 1px;
+		background: #44658f42;
+		margin-bottom: 10px;
+		transform: scale(2);
+	}
+}

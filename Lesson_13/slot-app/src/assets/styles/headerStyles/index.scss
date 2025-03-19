@@ -1,0 +1,46 @@
+.header {
+	border-bottom: 1px solid #44648f;
+	box-shadow: 0 1px 5px 1px #00000036;
+	background: #edf0f5;
+
+	.container {
+		padding: 8px 0;
+		display: flex;
+		width: 100%;
+		gap: 20px;
+		justify-content: space-between;
+	}
+
+	&__title {
+		font-size: 40px;
+		text-shadow: 1px 1px 2px #00000036;
+		color: #af3142de;
+	}
+
+	.menu {
+		display: flex;
+		gap: 20px;
+		font-size: 20px;
+		align-items: center;
+		justify-content: flex-end;
+		
+		button{
+		font-size: 20px;
+		background: transparent;
+		}
+
+		&__user-name {
+				margin-right: 20px;
+				color: #af3142de;
+			}
+
+		&__item {
+			color: #44648f;
+
+			&:hover {
+				text-decoration: underline;
+				color: #af3142de;
+			}
+		}
+	}
+}

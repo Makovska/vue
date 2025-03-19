@@ -1,0 +1,79 @@
+@forward './fonts.scss';
+@forward './null.scss';
+@forward './button.scss';
+@forward './table.scss';
+@forward './forms.scss';
+@forward './cards.scss';
+
+body {
+  background: #edf0f538 url(/images/bg9.svg) center / cover no-repeat fixed;
+}
+
+*:focus-visible {
+	outline: 2px solid #44648f;
+}
+
+main {
+	flex: 1;
+	display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;;
+	gap: 30px;
+	padding: 30px 0;
+}
+
+.container {
+	padding: 0 15px;
+	width: 100%;
+	max-width: 1230px;
+	margin: 0 auto;
+}
+
+section {
+  min-height: 50vh;
+	width: 100%;
+  background: #fdfdfd;
+  padding: 20px 20px 20px 10%;
+  box-shadow: 1px 1px 5px -1px #00000036;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 25px;
+}
+h4 {
+  font-size: 20px;
+}
+li {
+  line-height: 2;
+}
+.red-text {
+  color: #af3142de;
+}
+
+.picture {
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    position: relative;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      transition: 0.2s;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
